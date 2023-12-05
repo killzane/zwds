@@ -11,6 +11,9 @@ export class Gong {
 
   private _index: number = -1;
 
+  private _daYunStartAge = -1;
+  // private _daYunStartYear = -1;
+
   constructor(zhiIndex: number, benMingPan: BenMingPan) {
     this._benMingPan = benMingPan;
 
@@ -20,6 +23,10 @@ export class Gong {
       10;
     this._zhiIndex = zhiIndex;
     this._index = (zhiIndex - benMingPan.getMingGongPosition() + 12) % 12;
+  }
+
+  addStar(star: Star) {
+    this._mainStar.push(star);
   }
 
   setGanIndex(ganIndex: number) {
@@ -50,5 +57,15 @@ export class Gong {
   }
   getBenMingPan(): BenMingPan {
     return this._benMingPan;
+  }
+
+  getDaYunStartAge(): number {
+    return this._daYunStartAge;
+  }
+
+  getStars(): Star[] {
+    let stars: Star[] = [];
+    stars.push(...this._mainStar);
+    return stars;
   }
 }
