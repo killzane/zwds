@@ -1,3 +1,5 @@
 import { BenMingPan } from "./BenMingPan";
+import { Solar } from "./Solar";
+import { Lunar } from "./Lunar";
 
-export default { BenMingPan };
+export default { Solar, Lunar, BenMingPan };
