@@ -63,6 +63,10 @@ export class Gong {
     return this._daYunStartAge;
   }
 
+  /**
+   * 取得宮位內星星物件
+   * @returns 星星物件
+   */
   getStars(): Star[] {
     let stars: Star[] = [];
     stars.push(...this._mainStar);
