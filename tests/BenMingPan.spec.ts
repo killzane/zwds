@@ -50,30 +50,35 @@ describe("本命盤", () => {
   //   assert.strictEqual(actual, expected);
   // });
 
-  it("紫微星",()=>{
-    const expected = new Star(0,"紫微")
+  it("紫微星", () => {
+    const expected = new Star(0, "紫微");
     expect(benming.getGong(1).getStars()).to.deep.include(expected);
-  })
+  });
 
-  it("天機星",()=>{
-    const expected = new Star(1,"天機")
+  it("天機星", () => {
+    const expected = new Star(1, "天機");
     expect(benming.getGong(0).getStars()).to.deep.include(expected);
-  })
+  });
 
-  it("廉貞星",()=>{
-    const expected = new Star(12,"廉貞")
+  it("廉貞星", () => {
+    const expected = new Star(12, "廉貞");
     expect(benming.getGong(5).getStars()).to.deep.include(expected);
-  })
+  });
 
-  it("祿存星",()=>{
-    const expected = new Star(26,"祿存")
+  it("祿存星", () => {
+    const expected = new Star(26, "祿存");
     expect(benming.getGong(5).getStars()).to.deep.include(expected);
-  })
+  });
 
-  it("天福星",()=>{
-    const expected = new Star(31,"天福")
-    expect(benming.getGong(3).getStars()).to.deep.include(expected);
-  })
+  it("天馬星", () => {
+    const expected = new Star(27, "天馬");
+    expect(benming.getGong(2).getStars()).to.deep.include(expected);
+  });
+
+  it("破碎星", () => {
+    const expected = new Star(44, "破碎");
+    expect(benming.getGong(1).getStars()).to.deep.include(expected);
+  });
 
   // it("子位", () => {
   //   let pos = 0;
