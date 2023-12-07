@@ -65,6 +65,16 @@ describe("本命盤", () => {
     expect(benming.getGong(5).getStars()).to.deep.include(expected);
   })
 
+  it("祿存星",()=>{
+    const expected = new Star(26,"祿存")
+    expect(benming.getGong(5).getStars()).to.deep.include(expected);
+  })
+
+  it("天福星",()=>{
+    const expected = new Star(31,"天福")
+    expect(benming.getGong(3).getStars()).to.deep.include(expected);
+  })
+
   // it("子位", () => {
   //   let pos = 0;
   //   let expected = new Gong(pos, benming);
