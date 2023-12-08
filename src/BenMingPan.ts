@@ -200,6 +200,38 @@ export class BenMingPan {
     [11, 3, 10, 0, 5, 1],
   ];
 
+  // 火星 [時辰][生年支]
+  static HUO_XING_TABLE: number[][] = [
+    [2, 3, 1, 9, 2, 3, 1, 9, 2, 3, 1, 9],
+    [3, 4, 2, 10, 3, 4, 2, 10, 3, 4, 2, 10],
+    [4, 5, 3, 11, 4, 5, 3, 11, 4, 5, 3, 11],
+    [5, 6, 4, 0, 5, 6, 4, 0, 5, 6, 4, 0],
+    [6, 7, 5, 1, 6, 7, 5, 1, 6, 7, 5, 1],
+    [7, 8, 6, 2, 7, 8, 6, 2, 7, 8, 6, 2],
+    [8, 9, 7, 3, 8, 9, 7, 3, 8, 9, 7, 3],
+    [9, 10, 8, 4, 9, 10, 8, 4, 9, 10, 8, 4],
+    [10, 11, 9, 5, 10, 11, 9, 5, 10, 11, 9, 5],
+    [11, 0, 10, 6, 11, 0, 10, 6, 11, 0, 10, 6],
+    [0, 1, 11, 7, 0, 1, 11, 7, 0, 1, 11, 7],
+    [1, 2, 0, 8, 1, 2, 0, 8, 1, 2, 0, 8],
+  ];
+
+  // 鈴星 [時辰][生年支]
+  static LING_XING_TABLE: number[][] = [
+    [10, 10, 3, 10, 10, 10, 3, 10, 10, 10, 3, 10],
+    [11, 11, 4, 11, 11, 11, 4, 11, 11, 11, 4, 11],
+    [0, 0, 5, 0, 0, 0, 5, 0, 0, 0, 5, 0],
+    [1, 1, 6, 1, 1, 1, 6, 1, 1, 1, 6, 1],
+    [2, 2, 7, 2, 2, 2, 7, 2, 2, 2, 7, 2],
+    [3, 3, 8, 3, 3, 3, 8, 3, 3, 3, 8, 3],
+    [4, 4, 9, 4, 4, 4, 9, 4, 4, 4, 9, 4],
+    [5, 5, 10, 5, 5, 5, 10, 5, 5, 5, 10, 5],
+    [6, 6, 11, 6, 6, 6, 11, 6, 6, 6, 11, 6],
+    [7, 7, 0, 7, 7, 7, 0, 7, 7, 7, 0, 7],
+    [8, 8, 1, 8, 8, 8, 1, 8, 8, 8, 1, 8],
+    [9, 9, 2, 9, 9, 9, 2, 9, 9, 9, 2, 9],
+  ];
+
   // 1 = 男
   private _gender: number;
   private _sect: number = 1;
@@ -435,6 +467,20 @@ export class BenMingPan {
     this._gong[
       BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][5]
     ].addStar(new Star(53, StarUtil.STAR_LIST[53]));
+
+    // 安火星
+    this._gong[
+      BenMingPan.HUO_XING_TABLE[this._lunar.getTimeZhiIndex()][
+        this._lunar.getYearZhiIndex()
+      ]
+    ].addStar(new Star(22, StarUtil.STAR_LIST[22]));
+
+    // 安鈴星
+    this._gong[
+      BenMingPan.LING_XING_TABLE[this._lunar.getTimeZhiIndex()][
+        this._lunar.getYearZhiIndex()
+      ]
+    ].addStar(new Star(23, StarUtil.STAR_LIST[23]));
   }
 
   getSect(): number {
