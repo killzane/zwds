@@ -166,6 +166,23 @@ export class BenMingPan {
     [5, 7, 0, 7, 5, 4, 10, 2, 10, 0, 3, 11, 1, 9],
   ];
 
+  // 月星系 1-12 月
+  // 左輔 	右弼 	天刑 	天姚 	月馬 	解神 	天巫 	天月 	陰煞
+  static MONTH_STAR_TABLE: number[][] = [
+    [4, 10, 9, 1, 8, 8, 5, 10, 2],
+    [5, 9, 10, 2, 5, 8, 8, 5, 0],
+    [6, 8, 11, 3, 2, 10, 2, 4, 10],
+    [7, 7, 0, 4, 11, 10, 11, 2, 8],
+    [8, 6, 1, 5, 8, 0, 5, 7, 6],
+    [9, 5, 2, 6, 5, 0, 8, 3, 4],
+    [10, 4, 3, 7, 2, 2, 2, 11, 2],
+    [11, 3, 4, 8, 11, 2, 11, 7, 0],
+    [0, 2, 5, 9, 8, 4, 5, 2, 10],
+    [1, 1, 6, 10, 5, 4, 8, 6, 8],
+    [2, 0, 7, 11, 2, 6, 2, 10, 6],
+    [3, 11, 8, 0, 11, 6, 11, 2, 4],
+  ];
+
   // 1 = 男
   private _gender: number;
   private _sect: number = 1;
@@ -335,10 +352,47 @@ export class BenMingPan {
     this._gong[
       (this._mingGongPosition + this._lunar.getYearZhiIndex()) % 12
     ].addStar(new Star(54, StarUtil.STAR_LIST[54]));
-    
+
     this._gong[
       (this.getShenGongPosition() + this._lunar.getYearZhiIndex()) % 12
     ].addStar(new Star(55, StarUtil.STAR_LIST[55]));
+
+    // 安月星系
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][0]
+    ].addStar(new Star(16, StarUtil.STAR_LIST[16]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][1]
+    ].addStar(new Star(17, StarUtil.STAR_LIST[17]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][2]
+    ].addStar(new Star(45, StarUtil.STAR_LIST[45]));
+    
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][3]
+    ].addStar(new Star(46, StarUtil.STAR_LIST[46]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][4]
+    ].addStar(new Star(47, StarUtil.STAR_LIST[47]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][5]
+    ].addStar(new Star(48, StarUtil.STAR_LIST[48]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][6]
+    ].addStar(new Star(49, StarUtil.STAR_LIST[49]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][7]
+    ].addStar(new Star(50, StarUtil.STAR_LIST[50]));
+
+    this._gong[
+      BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][8]
+    ].addStar(new Star(51, StarUtil.STAR_LIST[51]));
   }
 
   getSect(): number {
