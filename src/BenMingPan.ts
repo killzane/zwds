@@ -330,6 +330,15 @@ export class BenMingPan {
     this._gong[
       BenMingPan.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][13]
     ].addStar(new Star(44, StarUtil.STAR_LIST[44]));
+
+    // 安天才，天壽星
+    this._gong[
+      (this._mingGongPosition + this._lunar.getYearZhiIndex()) % 12
+    ].addStar(new Star(54, StarUtil.STAR_LIST[54]));
+    
+    this._gong[
+      (this.getShenGongPosition() + this._lunar.getYearZhiIndex()) % 12
+    ].addStar(new Star(55, StarUtil.STAR_LIST[55]));
   }
 
   getSect(): number {

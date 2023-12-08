@@ -80,6 +80,16 @@ describe("本命盤", () => {
     expect(benming.getGong(1).getStars()).to.deep.include(expected);
   });
 
+  it("天才星", () => {
+    const expected = new Star(54, "天才");
+    expect(benming.getGong(6).getStars()).to.deep.include(expected);
+  });
+
+  it("天壽星", () => {
+    const expected = new Star(55, "天壽");
+    expect(benming.getGong(10).getStars()).to.deep.include(expected);
+  });
+
   // it("子位", () => {
   //   let pos = 0;
   //   let expected = new Gong(pos, benming);
