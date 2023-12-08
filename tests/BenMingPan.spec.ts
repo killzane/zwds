@@ -100,6 +100,16 @@ describe("本命盤", () => {
     expect(benming.getGong(4).getStars()).to.deep.include(expected);
   });
 
+  it("文曲星", () => {
+    const expected = new Star(19, "文曲");
+    expect(benming.getGong(6).getStars()).to.deep.include(expected);
+  });
+
+  it("地空星", () => {
+    const expected = new Star(24, "地空");
+    expect(benming.getGong(9).getStars()).to.deep.include(expected);
+  });
+
   // it("子位", () => {
   //   let pos = 0;
   //   let expected = new Gong(pos, benming);

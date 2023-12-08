@@ -183,6 +183,23 @@ export class BenMingPan {
     [3, 11, 8, 0, 11, 6, 11, 2, 4],
   ];
 
+  // 時星系1-12 小時
+  // 文昌 	文曲 	地劫 	地空 	台輔 	封誥
+  static HOUR_STAR_TABLE: number[][] = [
+    [10, 4, 11, 11, 6, 6],
+    [9, 5, 0, 10, 7, 3],
+    [8, 6, 1, 9, 8, 4],
+    [7, 7, 2, 8, 9, 5],
+    [6, 8, 3, 7, 10, 6],
+    [5, 9, 4, 6, 11, 7],
+    [4, 10, 5, 5, 0, 8],
+    [3, 11, 6, 4, 1, 9],
+    [2, 0, 7, 3, 2, 10],
+    [1, 1, 8, 2, 3, 11],
+    [0, 2, 9, 1, 4, 0],
+    [11, 3, 10, 0, 5, 1],
+  ];
+
   // 1 = 男
   private _gender: number;
   private _sect: number = 1;
@@ -369,7 +386,7 @@ export class BenMingPan {
     this._gong[
       BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][2]
     ].addStar(new Star(45, StarUtil.STAR_LIST[45]));
-    
+
     this._gong[
       BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][3]
     ].addStar(new Star(46, StarUtil.STAR_LIST[46]));
@@ -393,6 +410,31 @@ export class BenMingPan {
     this._gong[
       BenMingPan.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][8]
     ].addStar(new Star(51, StarUtil.STAR_LIST[51]));
+
+    // 安時星系
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][0]
+    ].addStar(new Star(18, StarUtil.STAR_LIST[18]));
+
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][1]
+    ].addStar(new Star(19, StarUtil.STAR_LIST[19]));
+
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][2]
+    ].addStar(new Star(25, StarUtil.STAR_LIST[25]));
+
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][3]
+    ].addStar(new Star(24, StarUtil.STAR_LIST[24]));
+
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][4]
+    ].addStar(new Star(52, StarUtil.STAR_LIST[52]));
+
+    this._gong[
+      BenMingPan.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][5]
+    ].addStar(new Star(53, StarUtil.STAR_LIST[53]));
   }
 
   getSect(): number {
