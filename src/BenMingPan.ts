@@ -12,11 +12,13 @@ export class BenMingPan {
   private _lunar: Lunar;
   private _yinYang: number = 0; // 0 = 陽干, 1 = 陰干
   private _gong: Gong[] = [];
+  private _stars: Star[] = [];
   private _mingGongPosition = -1;
   private _mingZhuXing: Star;
   private _shenZhuXing: Star;
   private _yinWeiGongGan = -1;
   private _wuXingIndex = 0;
+  private _starsById: { [id: number]: Star } = {};
 
   constructor(lunar: Lunar, gender: number) {
     this._gender = gender;
@@ -31,10 +33,13 @@ export class BenMingPan {
 
     this._yinWeiGongGan =
       LunarUtil.GONG_GANG_START[this._lunar.getYearGanIndex()];
-    this._mingGongPosition = ZiWeiDouShuUtil.MING_GONG_POSITION[timeZhi][month - 1];
+    this._mingGongPosition =
+      ZiWeiDouShuUtil.MING_GONG_POSITION[timeZhi][month - 1];
     this._mingZhuXing = new Star(
       ZiWeiDouShuUtil.MING_ZHU_XING_MAP[this._mingGongPosition],
-      StarUtil.STAR_LIST[ZiWeiDouShuUtil.MING_ZHU_XING_MAP[this._mingGongPosition]]
+      StarUtil.STAR_LIST[
+        ZiWeiDouShuUtil.MING_ZHU_XING_MAP[this._mingGongPosition]
+      ]
     );
     this._shenZhuXing = new Star(
       ZiWeiDouShuUtil.SHEN_ZHU_XING_MAP[this._lunar.getYearZhiIndex()],
@@ -48,216 +53,291 @@ export class BenMingPan {
     }
 
     this._wuXingIndex =
-    ZiWeiDouShuUtil.WU_XING[this._gong[this._mingGongPosition].getZhiIndex()][
+      ZiWeiDouShuUtil.WU_XING[this._gong[this._mingGongPosition].getZhiIndex()][
         this._gong[this._mingGongPosition].getGanIndex()
       ];
 
     // 安紫微
     const ziWeiPos =
-    ZiWeiDouShuUtil.MAIN_STAR_TABLE[this._lunar.getDay()][this._wuXingIndex - 2];
-    this._gong[ziWeiPos].addStar(new Star(0, StarUtil.STAR_LIST[0]));
+      ZiWeiDouShuUtil.MAIN_STAR_TABLE[this._lunar.getDay()][
+        this._wuXingIndex - 2
+      ];
+    this.addStar(new Star(0, StarUtil.STAR_LIST[0]), ziWeiPos);
 
     // 安 14 主星
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][1]].addStar(
-      new Star(1, StarUtil.STAR_LIST[1])
+    this.addStar(
+      new Star(1, StarUtil.STAR_LIST[1]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][1]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][2]].addStar(
-      new Star(2, StarUtil.STAR_LIST[2])
+    this.addStar(
+      new Star(2, StarUtil.STAR_LIST[2]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][2]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][3]].addStar(
-      new Star(3, StarUtil.STAR_LIST[3])
+    this.addStar(
+      new Star(3, StarUtil.STAR_LIST[3]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][3]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][4]].addStar(
-      new Star(4, StarUtil.STAR_LIST[4])
+    this.addStar(
+      new Star(4, StarUtil.STAR_LIST[4]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][4]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][5]].addStar(
-      new Star(12, StarUtil.STAR_LIST[12])
+    this.addStar(
+      new Star(12, StarUtil.STAR_LIST[12]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][5]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][6]].addStar(
-      new Star(5, StarUtil.STAR_LIST[5])
+    this.addStar(
+      new Star(5, StarUtil.STAR_LIST[5]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][6]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][7]].addStar(
-      new Star(6, StarUtil.STAR_LIST[6])
+    this.addStar(
+      new Star(6, StarUtil.STAR_LIST[6]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][7]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][8]].addStar(
-      new Star(7, StarUtil.STAR_LIST[7])
+    this.addStar(
+      new Star(7, StarUtil.STAR_LIST[7]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][8]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][9]].addStar(
-      new Star(8, StarUtil.STAR_LIST[8])
+    this.addStar(
+      new Star(8, StarUtil.STAR_LIST[8]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][9]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][10]].addStar(
-      new Star(13, StarUtil.STAR_LIST[13])
+    this.addStar(
+      new Star(13, StarUtil.STAR_LIST[13]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][10]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][11]].addStar(
-      new Star(9, StarUtil.STAR_LIST[9])
+    this.addStar(
+      new Star(9, StarUtil.STAR_LIST[9]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][11]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][12]].addStar(
-      new Star(10, StarUtil.STAR_LIST[10])
+    this.addStar(
+      new Star(10, StarUtil.STAR_LIST[10]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][12]
     );
-    this._gong[ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][13]].addStar(
-      new Star(11, StarUtil.STAR_LIST[11])
+    this.addStar(
+      new Star(11, StarUtil.STAR_LIST[11]),
+      ZiWeiDouShuUtil.MAIN_14_STAR_TABLE[ziWeiPos][13]
     );
 
     // 安年干星系
-    this._gong[
+    this.addStar(
+      new Star(26, StarUtil.STAR_LIST[26]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][0]
-    ].addStar(new Star(26, StarUtil.STAR_LIST[26]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(21, StarUtil.STAR_LIST[21]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][1]
-    ].addStar(new Star(21, StarUtil.STAR_LIST[21]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(20, StarUtil.STAR_LIST[20]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][2]
-    ].addStar(new Star(20, StarUtil.STAR_LIST[20]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(14, StarUtil.STAR_LIST[14]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][3]
-    ].addStar(new Star(14, StarUtil.STAR_LIST[14]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(15, StarUtil.STAR_LIST[15]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][4]
-    ].addStar(new Star(15, StarUtil.STAR_LIST[15]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(30, StarUtil.STAR_LIST[30]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][5]
-    ].addStar(new Star(30, StarUtil.STAR_LIST[30]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(31, StarUtil.STAR_LIST[31]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][6]
-    ].addStar(new Star(31, StarUtil.STAR_LIST[31]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(32, StarUtil.STAR_LIST[32]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][7]
-    ].addStar(new Star(32, StarUtil.STAR_LIST[32]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(33, StarUtil.STAR_LIST[33]),
       ZiWeiDouShuUtil.YEARLY_GAN_STAR_TABLE[this._lunar.getYearGanIndex()][8]
-    ].addStar(new Star(33, StarUtil.STAR_LIST[33]));
+    );
 
     // 安年支星系
-    this._gong[
+    this.addStar(
+      new Star(27, StarUtil.STAR_LIST[27]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][0]
-    ].addStar(new Star(27, StarUtil.STAR_LIST[27]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(34, StarUtil.STAR_LIST[34]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][1]
-    ].addStar(new Star(34, StarUtil.STAR_LIST[34]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(35, StarUtil.STAR_LIST[35]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][2]
-    ].addStar(new Star(35, StarUtil.STAR_LIST[35]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(36, StarUtil.STAR_LIST[36]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][3]
-    ].addStar(new Star(36, StarUtil.STAR_LIST[36]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(37, StarUtil.STAR_LIST[37]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][4]
-    ].addStar(new Star(37, StarUtil.STAR_LIST[37]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(28, StarUtil.STAR_LIST[28]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][5]
-    ].addStar(new Star(28, StarUtil.STAR_LIST[28]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(29, StarUtil.STAR_LIST[29]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][6]
-    ].addStar(new Star(29, StarUtil.STAR_LIST[29]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(38, StarUtil.STAR_LIST[38]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][7]
-    ].addStar(new Star(38, StarUtil.STAR_LIST[38]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(39, StarUtil.STAR_LIST[39]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][8]
-    ].addStar(new Star(39, StarUtil.STAR_LIST[39]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(40, StarUtil.STAR_LIST[40]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][9]
-    ].addStar(new Star(40, StarUtil.STAR_LIST[40]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(41, StarUtil.STAR_LIST[41]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][10]
-    ].addStar(new Star(41, StarUtil.STAR_LIST[41]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(42, StarUtil.STAR_LIST[42]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][11]
-    ].addStar(new Star(42, StarUtil.STAR_LIST[42]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(43, StarUtil.STAR_LIST[43]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][12]
-    ].addStar(new Star(43, StarUtil.STAR_LIST[43]));
-    this._gong[
+    );
+    this.addStar(
+      new Star(44, StarUtil.STAR_LIST[44]),
       ZiWeiDouShuUtil.YEARLY_ZHI_STAR_TABLE[this._lunar.getYearZhiIndex()][13]
-    ].addStar(new Star(44, StarUtil.STAR_LIST[44]));
+    );
 
     // 安天才，天壽星
-    this._gong[
+    this.addStar(
+      new Star(54, StarUtil.STAR_LIST[54]),
       (this._mingGongPosition + this._lunar.getYearZhiIndex()) % 12
-    ].addStar(new Star(54, StarUtil.STAR_LIST[54]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(55, StarUtil.STAR_LIST[55]),
       (this.getShenGongPosition() + this._lunar.getYearZhiIndex()) % 12
-    ].addStar(new Star(55, StarUtil.STAR_LIST[55]));
+    );
 
     // 安月星系
-    this._gong[
+    this.addStar(
+      new Star(16, StarUtil.STAR_LIST[16]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][0]
-    ].addStar(new Star(16, StarUtil.STAR_LIST[16]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(17, StarUtil.STAR_LIST[17]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][1]
-    ].addStar(new Star(17, StarUtil.STAR_LIST[17]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(45, StarUtil.STAR_LIST[45]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][2]
-    ].addStar(new Star(45, StarUtil.STAR_LIST[45]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(46, StarUtil.STAR_LIST[46]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][3]
-    ].addStar(new Star(46, StarUtil.STAR_LIST[46]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(47, StarUtil.STAR_LIST[47]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][4]
-    ].addStar(new Star(47, StarUtil.STAR_LIST[47]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(48, StarUtil.STAR_LIST[48]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][5]
-    ].addStar(new Star(48, StarUtil.STAR_LIST[48]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(49, StarUtil.STAR_LIST[49]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][6]
-    ].addStar(new Star(49, StarUtil.STAR_LIST[49]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(50, StarUtil.STAR_LIST[50]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][7]
-    ].addStar(new Star(50, StarUtil.STAR_LIST[50]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(51, StarUtil.STAR_LIST[51]),
       ZiWeiDouShuUtil.MONTH_STAR_TABLE[this._lunar.getMonth() - 1][8]
-    ].addStar(new Star(51, StarUtil.STAR_LIST[51]));
+    );
 
     // 安時星系
-    this._gong[
+    this.addStar(
+      new Star(18, StarUtil.STAR_LIST[18]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][0]
-    ].addStar(new Star(18, StarUtil.STAR_LIST[18]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(19, StarUtil.STAR_LIST[19]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][1]
-    ].addStar(new Star(19, StarUtil.STAR_LIST[19]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(25, StarUtil.STAR_LIST[25]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][2]
-    ].addStar(new Star(25, StarUtil.STAR_LIST[25]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(24, StarUtil.STAR_LIST[24]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][3]
-    ].addStar(new Star(24, StarUtil.STAR_LIST[24]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(52, StarUtil.STAR_LIST[52]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][4]
-    ].addStar(new Star(52, StarUtil.STAR_LIST[52]));
-
-    this._gong[
+    );
+    this.addStar(
+      new Star(53, StarUtil.STAR_LIST[53]),
       ZiWeiDouShuUtil.HOUR_STAR_TABLE[this._lunar.getTimeZhiIndex()][5]
-    ].addStar(new Star(53, StarUtil.STAR_LIST[53]));
+    );
 
     // 安火星
-    this._gong[
+    this.addStar(
+      new Star(22, StarUtil.STAR_LIST[22]),
       ZiWeiDouShuUtil.HUO_XING_TABLE[this._lunar.getTimeZhiIndex()][
         this._lunar.getYearZhiIndex()
       ]
-    ].addStar(new Star(22, StarUtil.STAR_LIST[22]));
+    );
 
     // 安鈴星
-    this._gong[
+    this.addStar(
+      new Star(23, StarUtil.STAR_LIST[23]),
       ZiWeiDouShuUtil.LING_XING_TABLE[this._lunar.getTimeZhiIndex()][
         this._lunar.getYearZhiIndex()
       ]
-    ].addStar(new Star(23, StarUtil.STAR_LIST[23]));
+    );
 
     // 安日星系
-    // this._gong[].addStar(new Star(56, StarUtil.STAR_LIST[56]));
+    this.addStar(
+      new Star(56, StarUtil.STAR_LIST[56]),
+      (this.findGongPositionIdOfStar(16) + this._lunar.getDay() - 1 + 12) % 12
+    );
+    this.addStar(
+      new Star(57, StarUtil.STAR_LIST[57]),
+      (this.findGongPositionIdOfStar(17) + this._lunar.getDay() + 1 + 36) % 12
+    );
+    this.addStar(
+      new Star(58, StarUtil.STAR_LIST[58]),
+      (this.findGongPositionIdOfStar(18) + this._lunar.getDay() - 2 + 12) % 12
+    );
+    this.addStar(
+      new Star(59, StarUtil.STAR_LIST[59]),
+      (this.findGongPositionIdOfStar(19) + this._lunar.getDay() - 2 + 12) % 12
+    );
+  }
+
+  addStar(star: Star, positionId: number) {
+    star.belongToPalace = this._gong[positionId];
+    this._stars.push(star);
+    this._gong[positionId].addStar(star);
+    this._starsById[star.id] = star;
+  }
+
+  // 反查星星屬於哪個宮，使用編號進行查詢
+  findGongPositionIdOfStar(starId: number): number {
+    const star = this._starsById[starId];
+    if (star.belongToPalace !== null) {
+      return star.belongToPalace.getZhiIndex();
+    } else {
+      return -1;
+    }
   }
 
   getSect(): number {
