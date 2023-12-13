@@ -332,6 +332,10 @@ export class BenMingPan {
       new Star(61, StarUtil.STAR_LIST[61]),
       this.findGongPositionIdOfStar(60) + 1
     );
+
+    // 安天傷，天使
+    this.addStar(new Star(62, StarUtil.STAR_LIST[62]),(this.getMingGongPosition()+5)%12)
+    this.addStar(new Star(63, StarUtil.STAR_LIST[63]),(this.getMingGongPosition()+7)%12)
   }
 
   addStar(star: Star, positionId: number) {

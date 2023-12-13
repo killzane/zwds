@@ -146,6 +146,12 @@ describe("本命盤", () => {
     expect(benming.getGong(10).getStars()).to.deep.include(expected);
   });
 
+  it("天殤", () => {
+    const expected = new Star(62, "天殤");
+    expected.belongToPalace = benming.getGong(7);
+    expect(benming.getGong(7).getStars()).to.deep.include(expected);
+  });
+
   // it("子位", () => {
   //   let pos = 0;
   //   let expected = new Gong(pos, benming);
