@@ -225,4 +225,7 @@ export class ZiWeiDouShuUtil {
     [8, 8, 1, 8, 8, 8, 1, 8, 8, 8, 1, 8],
     [9, 9, 2, 9, 9, 9, 2, 9, 9, 9, 2, 9],
   ];
+
+  // 旬空
+  static SHUN_KONG_TABLE: number[] = [5, 4, 3, 2, 1, 0];
 }

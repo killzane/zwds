@@ -321,6 +321,17 @@ export class BenMingPan {
       new Star(59, StarUtil.STAR_LIST[59]),
       (this.findGongPositionIdOfStar(19) + this._lunar.getDay() - 2 + 12) % 12
     );
+
+    // 安旬空
+    const iSexagenary = (this._lunar.getYear() - 1864) % 60;
+    this.addStar(
+      new Star(60, StarUtil.STAR_LIST[60]),
+      ZiWeiDouShuUtil.SHUN_KONG_TABLE[Math.floor(iSexagenary / 10)] * 2
+    );
+    this.addStar(
+      new Star(61, StarUtil.STAR_LIST[61]),
+      this.findGongPositionIdOfStar(60) + 1
+    );
   }
 
   addStar(star: Star, positionId: number) {

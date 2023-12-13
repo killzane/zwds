@@ -140,6 +140,12 @@ describe("本命盤", () => {
     expect(benming.getGong(5).getStars()).to.deep.include(expected);
   });
 
+  it("旬空", () => {
+    const expected = new Star(60, "旬空");
+    expected.belongToPalace = benming.getGong(10);
+    expect(benming.getGong(10).getStars()).to.deep.include(expected);
+  });
+
   // it("子位", () => {
   //   let pos = 0;
   //   let expected = new Gong(pos, benming);
